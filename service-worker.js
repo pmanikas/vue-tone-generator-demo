@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/4.3.1/workbox-sw.js");
 
 importScripts(
-  "/vue-tone-generator/precache-manifest.d595c9a2b12269bc8a97176baae37472.js"
+  "/vue-tone-generator/precache-manifest.b0c745fa88a5f51498819f2c24ea28bc.js"
 );
 
 workbox.core.setCacheNameDetails({prefix: "vue-tone-generator"});
