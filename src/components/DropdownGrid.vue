@@ -64,7 +64,7 @@ export default {
 </script>
 
 <template>
-  <div class="dropdown" click-outside="close">
+  <div class="dropdown" v-click-outside="close">
     <div @click="toggle" :class="['selector', `caret${caretPosition}`]">
       {{ currentValue }}
     </div>
