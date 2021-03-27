@@ -1,8 +1,9 @@
 <script>
 import soundServiceCreator from "../services/sound.service";
-import FrequencySlider from "./FrequencySlider";
+import RangeInput from "./RangeInput";
 import soundConfig from "../config/sound.config";
 import DropdownGrid from "./../components/DropdownGrid";
+import Button from "./Button";
 
 const soundService = soundServiceCreator();
 
@@ -10,7 +11,7 @@ const { DEFAULT_VOLUME } = soundConfig;
 
 export default {
   name: "ToneGenerator",
-  components: { FrequencySlider, DropdownGrid },
+  components: { RangeInput, DropdownGrid, Button },
   data() {
     return {
       soundService,
@@ -58,8 +59,8 @@ export default {
       this.noteIndex = noteIndex;
       this.notes = notes;
     },
-    changeVolumeHandler(e) {
-      this.volume = e.target.value;
+    changeVolumeHandler(value) {
+      this.volume = value;
       this.soundService.setVolume(Number(this.volume) / 100);
     },
     changeFrequencyHandler(value) {
@@ -87,9 +88,7 @@ export default {
 </script>
 
 <template>
-  <div class="freqGenerator">
-    <h1 class="title">Tone Generator</h1>
-
+  <div class="toneGenerator">
     <div class="adjustments">
       <div class="waveTypes">
         <DropdownGrid
@@ -99,9 +98,12 @@ export default {
           :is-index-based="false"
           position="left"
           caret-position="left"
+          :number-of-columns="types.length"
         />
       </div>
-      <h2 class="frequencyValue">{{ frequency }} Hz</h2>
+      <h2 class="frequency">
+        <span class="frequencyValue">{{ frequency }} </span>Hz
+      </h2>
       <DropdownGrid
         @setItem="changeNoteIndexHandler"
         :items="notes"
@@ -109,23 +111,26 @@ export default {
       />
     </div>
 
-    <FrequencySlider
+    <RangeInput
       :value="sliderValue"
       @updateValue="changeFrequencyHandler"
+      min="0"
+      max="2770"
     />
 
     <div class="controls">
-      <button @click="togglePlayButtonHandler" class="togglePlayButton">
+      <Button @pressed="togglePlayButtonHandler">
         {{ isPlaying ? "Stop" : "Play" }}
-      </button>
+      </Button>
       <div class="volume">
-        <input
-          @input="changeVolumeHandler"
-          class="volumeSlider"
-          type="range"
-          :min="0"
-          :max="100"
+        <RangeInput
           :value="volume"
+          @updateValue="changeVolumeHandler"
+          min="0"
+          max="100"
+          uiSize="small"
+          theme="marine"
+          class="volumeRange"
         />
         {{ volume }} %
       </div>
@@ -135,6 +140,10 @@ export default {
 
 <style lang="scss" scoped>
 @use "./../styles/design" as *;
+
+::selection {
+  background: transparent;
+}
 
 .adjustments {
   display: flex;
@@ -154,13 +163,13 @@ export default {
   align-items: center;
 }
 
-.volumeSlider {
+.volumeRange {
   margin-right: $s-m;
 }
 
-.button {
-  &.active {
-    background: $c-eastern-blue;
+@include desktop {
+  .frequencyValue {
+    font-size: $s-xxl;
   }
 }
 </style>

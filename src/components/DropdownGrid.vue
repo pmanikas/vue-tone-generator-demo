@@ -1,6 +1,11 @@
 <script>
+import ClickOutside from "vue-click-outside";
+
 export default {
   name: "DropdownGrid",
+  directives: {
+    ClickOutside,
+  },
   props: {
     items: {
       type: Array,
@@ -22,11 +27,23 @@ export default {
       type: [Boolean, String],
       default: "right", // "left", "right" or false
     },
+    numberOfColumns: {
+      type: Number,
+      default: 12,
+    },
   },
   data() {
     return {
       isOpened: false,
     };
+  },
+  methods: {
+    close() {
+      this.isOpened = false;
+    },
+    toggle() {
+      this.isOpened = !this.isOpened;
+    },
   },
   computed: {
     currentValue() {
@@ -37,19 +54,21 @@ export default {
         ? `above ${this.items[this.items.length - 1]}`
         : this.items[this.selectedItem];
     },
+    gridStyle() {
+      return {
+        gridTemplateColumns: `repeat(${this.numberOfColumns}, 1fr)`,
+      };
+    },
   },
 };
 </script>
 
 <template>
-  <div class="dropdownGrid">
-    <div
-      @click="isOpened = !isOpened"
-      :class="['selector', `caret${caretPosition}`]"
-    >
+  <div class="dropdown" v-click-outside="close">
+    <div @click="toggle" :class="['selector', `caret${caretPosition}`]">
       {{ currentValue }}
     </div>
-    <ul :class="['grid', { active: isOpened }, position]">
+    <ul :class="['grid', { active: isOpened }, position]" :style="gridStyle">
       <li
         v-for="(item, i) of items"
         :key="`list-item-${item}-${i}`"
@@ -68,16 +87,15 @@ export default {
 <style lang="scss" scoped>
 @use "./../styles/design" as *;
 
-.dropdownGrid {
+.dropdown {
   position: relative;
 }
 
 .selector {
   position: relative;
-  width: 130px;
-  height: $s-xl;
-  line-height: $s-xl;
-  background: $c-san-juan-blue;
+  padding: $s-s $s-xl;
+  color: $c-brink-pink;
+  border: 1px solid $c-brink-pink;
   border-radius: $base-radius;
   text-align: center;
   cursor: pointer;
@@ -90,7 +108,7 @@ export default {
     height: 0;
     border-left: $s-xs solid transparent;
     border-right: $s-xs solid transparent;
-    border-top: $s-s solid $c-silver;
+    border-top: $s-s solid $c-brink-pink;
     transform: translateY(-50%);
     opacity: 0;
   }
@@ -110,18 +128,21 @@ export default {
   position: absolute;
   top: $s-xl;
   right: 0;
+  z-index: $z-dropdown;
   display: grid;
-  grid-template-columns: repeat(12, [col-start] 1fr);
   grid-gap: $s-s;
   align-items: center;
-  padding: $s-m;
-  background: $c-mine-shaft;
+  min-width: 80vw;
+  max-width: calc(100vw - #{$s-xxxl - $s-l});
+  padding: $s-l;
+  background: transparentize(darken($c-persian-indigo, 15%), 0.2);
   text-align: center;
   list-style: none;
   border-radius: $base-radius;
   opacity: 0;
   pointer-events: none;
   transition: opacity 0.3s ease-out;
+  overflow-x: auto;
   &.active {
     opacity: 1;
     pointer-events: auto;
@@ -137,12 +158,31 @@ export default {
 }
 
 .gridItem {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 48px;
+  min-height: 48px;
   padding: $s-s;
-  background: $c-san-juan-blue;
+  border: 1px solid $c-persian-indigo;
   border-radius: $base-radius;
+  color: $c-silver;
   cursor: pointer;
+  &:hover {
+    border: 1px solid $c-brink-pink;
+  }
   &.active {
-    background: $c-eastern-blue;
+    background: $c-brink-pink;
+  }
+}
+
+@include desktop {
+  .grid {
+    min-width: unset;
+  }
+  .gridItem {
+    min-width: unset;
+    min-height: unset;
   }
 }
 </style>

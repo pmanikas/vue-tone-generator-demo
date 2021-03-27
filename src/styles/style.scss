@@ -1,4 +1,34 @@
 @import "./design";
 @import "./reset";
 @import "./typography";
-@import "./animations";
+
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+::selection {
+  background: transparent;
+}
+
+*::-webkit-scrollbar {
+  width: 5px;
+  height: 100%;
+}
+
+*::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+*::-webkit-scrollbar-thumb {
+  background-color: transparentize($c-dusty-gray, 0.5);
+  border-radius: 20px;
+  border: transparent;
+}
+
+body {
+  background: $c-persian-indigo;
+  color: $c-white;
+}
