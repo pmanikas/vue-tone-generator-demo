@@ -1,5 +1,5 @@
 <script>
-import ClickOutside from "vue-click-outside";
+import ClickOutside from "./../directives/ClickOutside";
 
 export default {
   name: "DropdownGrid",
@@ -64,7 +64,7 @@ export default {
 </script>
 
 <template>
-  <div class="dropdown" v-click-outside="close">
+  <div class="dropdown" click-outside="close">
     <div @click="toggle" :class="['selector', `caret${caretPosition}`]">
       {{ currentValue }}
     </div>
