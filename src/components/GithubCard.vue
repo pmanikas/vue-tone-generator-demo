@@ -17,15 +17,10 @@ export default {
     this.getUserCard();
   },
   methods: {
-    getUserCard() {
-      this.username &&
-        fetch(`https://api.github.com/users/${this.username}`)
-          .then((res) => {
-            return res.json();
-          })
-          .then((data) => {
-            this.user = data;
-          });
+    async getUserCard() {
+      this.user = await fetch(`https://api.github.com/users/${this.username}`)
+        .then((res) => res.json())
+        .catch((error) => console.error(error));
     },
   },
 };
@@ -34,6 +29,7 @@ export default {
 <template>
   <div class="githubCard">
     <div class="cardContainer">
+      <span class="githubIcon"></span>
       <div class="imageContainer">
         <img
           class="image"
@@ -71,6 +67,8 @@ export default {
 <style lang="scss" scoped>
 @use "./../styles/design" as *;
 
+$s-object: $s-xxxl * 2;
+
 .githubCard {
   width: 400px;
   max-width: 90%;
@@ -98,6 +96,16 @@ export default {
     height: calc(#{$s-xxl} + (#{$s-object} / 2));
     background: transparentize($c-aqua-marine, 0.5);
   }
+}
+
+.githubIcon {
+  position: absolute;
+  top: $s-l;
+  right: $s-l;
+  width: $s-xl;
+  height: $s-xl;
+  background: $c-white;
+  mask: url(./../images/github-icon.svg) no-repeat center;
 }
 
 .imageContainer {
