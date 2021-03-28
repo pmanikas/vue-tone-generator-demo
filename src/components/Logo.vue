@@ -1,16 +1,18 @@
 <script>
+import LogoImage from "./../images/sine-wave-tone-generator-logo.png";
 export default {
   name: "Logo",
+  data() {
+    return {
+      LogoImage,
+    };
+  },
 };
 </script>
 
 <template>
   <header>
-    <img
-      class="logo"
-      src="images/sine-wave-tone-generator-logo.png"
-      alt="Tone Generator Logo"
-    />
+    <img class="logo" :src="LogoImage" alt="Tone Generator Logo" />
   </header>
 </template>
 

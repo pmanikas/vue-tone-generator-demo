@@ -1,19 +1,18 @@
 <script>
 import Header from "./components/Header";
-import Main from "./components/Main";
 import Footer from "./components/Footer";
 import("./styles/style.scss");
 
 export default {
   name: "App",
-  components: { Header, Main, Footer },
+  components: { Header, Footer },
 };
 </script>
 
 <template>
   <div class="app" scoped>
     <Header />
-    <Main />
+    <router-view />
     <Footer />
   </div>
 </template>

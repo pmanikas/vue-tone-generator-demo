@@ -38,6 +38,9 @@ export default {
     soundService.on("typeUpdate", (type) => {
       this.type = type;
     });
+    console.log(this.$route.params.frequency);
+    if (this.frequency !== this.$route.params.frequency)
+      this.setFrequency(this.$route.params.frequency);
   },
   destroyed() {
     soundService.off("statusUpdate");
@@ -65,7 +68,12 @@ export default {
     },
     changeFrequencyHandler(value) {
       const frequency = Math.round(20 * Math.pow(1.0025, value) - 19);
+      this.setFrequency(frequency);
+    },
+    setFrequency(frequency) {
       this.soundService.setFrequency(frequency);
+      if (frequency !== this.$route.params.frequency)
+        this.$router.push({ params: { frequency } }).catch(() => {});
     },
     updateFrequencySlider(frequency) {
       return Math.log((frequency + 19) / 20) / Math.log(1.0025);
