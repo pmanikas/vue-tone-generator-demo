@@ -4,6 +4,7 @@ import RangeInput from "./RangeInput";
 import soundConfig from "./../config/sound.config";
 import DropdownGrid from "./DropdownGrid";
 import Button from "./Button";
+import localSave from "./../utils/local-save";
 
 const soundService = soundServiceCreator();
 
@@ -16,7 +17,7 @@ export default {
     return {
       soundService,
       isPlaying: null,
-      volume: DEFAULT_VOLUME * 100,
+      volume: localSave.get("volume") || DEFAULT_VOLUME * 100,
       frequency: null,
       types: [],
       type: "",
@@ -38,7 +39,6 @@ export default {
     soundService.on("typeUpdate", (type) => {
       this.type = type;
     });
-    console.log(this.$route.params.frequency);
     if (this.frequency !== this.$route.params.frequency)
       this.setFrequency(this.$route.params.frequency);
   },
@@ -64,6 +64,7 @@ export default {
     },
     changeVolumeHandler(value) {
       this.volume = value;
+      localSave.save("volume", value);
       this.soundService.setVolume(Number(this.volume) / 100);
     },
     changeFrequencyHandler(value) {
