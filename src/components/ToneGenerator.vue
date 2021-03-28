@@ -1,8 +1,8 @@
 <script>
-import soundServiceCreator from "../services/sound.service";
+import soundServiceCreator from "./../services/sound.service";
 import RangeInput from "./RangeInput";
-import soundConfig from "../config/sound.config";
-import DropdownGrid from "./../components/DropdownGrid";
+import soundConfig from "./../config/sound.config";
+import DropdownGrid from "./DropdownGrid";
 import Button from "./Button";
 
 const soundService = soundServiceCreator();
