@@ -39,8 +39,12 @@ export default {
     soundService.on("typeUpdate", (type) => {
       this.type = type;
     });
-    if (this.frequency !== this.$route.params.frequency)
+    if (this.frequency !== this.$route.params.frequency) {
       this.setFrequency(this.$route.params.frequency);
+      this.sliderValue = this.updateFrequencySlider(
+        Number(this.$route.params.frequency)
+      );
+    }
   },
   destroyed() {
     soundService.off("statusUpdate");
