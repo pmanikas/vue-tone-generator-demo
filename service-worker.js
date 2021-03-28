@@ -14,10 +14,10 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/4.3.1/workbox-sw.js");
 
 importScripts(
-  "/vue-tone-generator/precache-manifest.f8ab882682a0a8337111531992c3a109.js"
+  "/vue-tone-generator-demo/precache-manifest.1bbab12f44867b041a36ad87c50a1bd4.js"
 );
 
-workbox.core.setCacheNameDetails({prefix: "vue-tone-generator"});
+workbox.core.setCacheNameDetails({prefix: "vue-tone-generator-demo"});
 
 self.addEventListener('message', (event) => {
   if (event.data && event.data.type === 'SKIP_WAITING') {
