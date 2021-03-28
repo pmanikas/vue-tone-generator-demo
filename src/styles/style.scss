@@ -32,3 +32,12 @@ body {
   background: $c-persian-indigo;
   color: $c-white;
 }
+
+@keyframes fadeIn {
+  0% {
+    opacity: 0.1;
+  }
+  100% {
+    opacity: 1;
+  }
+}

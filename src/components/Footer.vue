@@ -1,8 +1,10 @@
 <script>
+import ImageResource from "./ImageResource";
 import footerBg from "./../images/anime-car-radio-player.png";
 
 export default {
   name: "Footer",
+  components: { ImageResource },
   data() {
     return {
       footerBg,
@@ -19,7 +21,7 @@ export default {
 
 <template>
   <footer class="footerContainer">
-    <img
+    <ImageResource
       class="background"
       :src="footerBg"
       alt="anime girl with guitar watching the sunset"
