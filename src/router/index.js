@@ -1,16 +1,8 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
-import Main from "../components/Main.vue";
+import routes from "./routes";
 
 Vue.use(VueRouter);
-
-const routes = [
-  {
-    path: "/:frequency?",
-    name: "Main",
-    component: Main,
-  },
-];
 
 const router = new VueRouter({
   mode: "history",
